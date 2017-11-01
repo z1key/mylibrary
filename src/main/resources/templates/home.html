@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:replace="fragments/head::head"></th:block>
+    <title>Library</title>
+</head>
+<body>
+<th:block th:replace="fragments/header :: header">
+</th:block>
+<div class="container">
+    <div class="hero-unit">
+        <h1>Test</h1>
+        <p>
+            Welcome to the Spring MVC Quickstart application!
+            Get started quickly by signing up.
+        </p>
+        <p th:text="${#authorization.expression('hasAuthority(''ADMIN'')')}"></p>
+        <p th:text="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"></p>
+        <p th:text="${#authorization.expression('hasRole(''ADMIN'')')}"></p>
+        <p th:text="${#authorization.expression('hasRole(''R_ADMIN'')')}"></p>
+        <p th:text="${#authorization.expression('hasRole(''USER'')')}"></p>
+        <p th:text="${#authorization.expression('hasRole(''R_USER'')')}"></p>
+        <p>
+            <a href="/signup" th:href="@{/signup}" class="btn btn-large btn-success">Sign up</a>
+        </p>
+    </div>
+</div>
+<div th:replace="fragments/footer :: ${#authorization.expression('hasRole(''ADMIN'')')} ? 'footer-admin' : 'footer'">&copy; 2017 The Static Templates</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:replace="fragments/head::head"></th:block>
+</head>
+<!-- Navbar -->
+<div th:classappend="${#authorization.expression('hasRole(''ADMIN'')')} ? 'navbar-default':'navbar-inverse'" class="navbar navbar-fixed-top" th:fragment="header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">My project</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li th:classappend="${page == 'home' ? 'active' : ''}"><a href="#" th:href="@{/}">Home</a></li>
+                <li th:classappend="${page == 'hello' ? 'active' : ''}"><a href="#" th:href="@{/hello}">Hello</a></li>
+            </ul>
+            <ul th:if="${page != 'login'}" class="nav navbar-nav navbar-right" >
+                <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Sign in</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+            <p sec:authorize="isAuthenticated()" th:inline="text" class="greetings">Hello, [[${#authentication.name}]]!</p>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
+</html>
